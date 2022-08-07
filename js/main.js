@@ -3565,7 +3565,7 @@ elForm.addEventListener("submit" , (evt)=> {
 	
 	let filteredArray = pokemons.filter(function(item) {
 		let isAll = Selected == "all" ? true : item.type.includes(Selected)
-		let validation = isAll && item.weight >= elWeight && item.height >= elHeight && item.name.search(elName) !=  -1
+		let validation = isAll && Number(item.weight.split(" ")[0]) >= elWeight && item.height >= elHeight && item.name.search(elName) !=  -1
 		return validation
 	})
 
