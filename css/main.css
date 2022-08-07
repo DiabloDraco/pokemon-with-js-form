@@ -20,7 +20,7 @@ body {
 
 .logo:hover {
     transition: all 1s ease;
-    transform: rotate(360deg);
+    transform: scale(1.1);
 }
 
 .text {
