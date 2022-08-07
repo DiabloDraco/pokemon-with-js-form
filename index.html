@@ -10,20 +10,26 @@
 	<title>Pokemon</title>
 </head>
 <body class="bg-warning">
-	<form id="form" class="mt-5 gap-2 d-flex w-50 justify-content-center text-center mx-auto">
+	<form id="form" class="mt-5 gap-2 d-flex w-50 flex-column  flex-lg-row justify-content-center text-center mx-auto">
 		<input type="text" class="form-control name" aria-label="Sizing example input" placeholder="name" aria-describedby="inputGroup-sizing-sm">
 		<input type="number" class="form-control weight" placeholder="weight" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
 		<input type="number" class="form-control height" placeholder="height" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
-		<select class="form-select" aria-label="Default select example">
-			<option selected>All</option>
-			<option value="1">One</option>
-			<option value="2">Two</option>
-			<option value="3">Three</option>
+		<select class="form-select type" aria-label="Default select example">
+			<option value="all" selected>All</option>
 		</select>
+		<select class="form-select sort overflow-hidden" aria-label="Default select example">
+			<option value="weighthl" selected>Weight(high-to-low)</option>
+			<option value="weightlh" selected>Weight(low-to-high)</option>
+			<option value="heighthl" selected>Height(high-to-low)</option>
+			<option value="heightlh" selected>Weight(low-to-high)</option>
+			<option value="az" selected>Aa-Zz</option>
+			<option value="za" selected>Zz-Aa</option>
+		</select>
+		<button type="submit" class="btn btn-danger">Search</button>
 	</form>
 	<div class="container d-flex flex-column justify-content-center align-items-center">
 		<img class="logo" src="./images/pokemon_logo.png">
-		<ul id="list" class="row list-unstyled d-flex justify-content-between w-100 col-12 mt-3 gap-3">
+		<ul id="list" class="row list-unstyled d-flex justify-content-center w-100 col-12 mt-3">
 		</ul>
 	</div>
 	<script src="./js/main.js"></script>

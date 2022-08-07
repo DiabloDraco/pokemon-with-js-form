@@ -10,7 +10,9 @@
 body {
     font-family: 'Fredoka One' , 'Roboto';
 }
-
+#list {
+    gap: 100px;
+}
 .logo {
     width: 400px;
     margin-top: 50px;

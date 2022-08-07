@@ -3477,11 +3477,43 @@ let pokemons = [
 ];
 
 let elList = document.querySelector("#list");
+let elForm = document.querySelector("#form")
+
+
+let typeArr = []
+function findType(array) {
+	for (const item of array) {
+		for (const itemType of item.type) {
+			if (!typeArr.includes(itemType)) {
+				typeArr.push(itemType)
+			}
+		}
+	}
+}
+findType(pokemons)
+
+let elSelect = document.querySelector(".type")
+
+function renderType(array , wrapper) {
+	let fragment = document.createDocumentFragment()
+	for (let i = 0; i < array.length; i++) {
+		let newOption = document.createElement("option")
+		newOption.value = typeArr[i]
+		newOption.textContent = typeArr[i]
+		fragment.appendChild(newOption)
+	}
+	elSelect.appendChild(fragment)
+}
+renderType(typeArr , elSelect)
+
+
 elList.addEventListener("click" , function (params) {
 	alert("NICEEE CHOOOICEEE BROO!!!!!!")
 })
-function render(lol) {	
-	for (let i = 0; i < pokemons.length; i++) {
+function render(array , wrapper) {	
+	wrapper.innerHTML = null
+	let fragment = document.createDocumentFragment()
+	for (let i = 0; i < array.length; i++) {
 		let newLi = document.createElement("li")
 		let newImg = document.createElement("img")
 		let newh = document.createElement("h3")
@@ -3489,13 +3521,13 @@ function render(lol) {
 		let newP2 = document.createElement("P")
 		let newP3 = document.createElement("P")
 		let newP4 = document.createElement("P")
-		let src = pokemons[i]["img"]
-		let srch = pokemons[i]["name"]
-		let srcp1 = pokemons[i]["type"].join(" , ")
-		let srcp2 = pokemons[i]["weight"]
-		let srcp3 = pokemons[i]["height"]   
+		let src = array[i]["img"]
+		let srch = array[i]["name"]
+		let srcp1 = array[i]["type"].join(" , ")
+		let srcp2 = array[i]["weight"]
+		let srcp3 = array[i]["height"]   
 		// copyrighted by Mirmuhsin
-		elList.appendChild(newLi)
+		fragment.appendChild(newLi)
 		newLi.classList.add("col-lg-3" ,"mb-5" ,"col-12" ,"align-items-center" ,"d-flex" ,"flex-column","justify-content-center", "mb-3")
 		newLi.appendChild(newImg)
 		newImg.classList.add("mb-3" , "pt-3")
@@ -3516,6 +3548,47 @@ function render(lol) {
 		newP4.classList.add("text2")
 		newP4.textContent = "Great choiсe !!!"
 	}
+	wrapper.appendChild(fragment)
 }
+render(pokemons , elList)
 // copyrighted by Mirmuhsin
-render()
+
+elForm.addEventListener("submit" , (evt)=> {
+	evt.preventDefault()
+	
+	let elName = document.querySelector(".name").value.trim()
+	let elWeight = document.querySelector(".weight").value.trim()
+	let elHeight = document.querySelector(".height").value.trim()
+	let Selected = elSelect.value
+	let elSort = document.querySelector(".sort").value
+	
+	let filteredArray = pokemons.filter(function(item) {
+		let isAll = Selected == "all" ? true : item.type.includes(Selected)
+		let validation = isAll && item.weight >= elWeight && item.height >= elHeight && item.name.search(elName) !=  -1
+		return validation
+	})
+
+	filteredArray.sort((a , b)=> {
+		if (elSort == "weighthl") {
+			return b.weight.split(" ")[0] - a.weight.split(" ")[0]
+		}	
+		if (elSort == "weightlh") {
+			return a.weight.split(" ")[0] - b.weight.split(" ")[0]
+		}
+		if (elSort == "heighthl") {
+			return b.height.split(" ")[0] - a.height.split(" ")[0]
+		}		
+		if (elSort == "heighttlh") {
+			return a.height.split(" ")[0] - b.height.split(" ")[0]
+		}	
+		if (elSort == "az") {
+			return a === b ? 0 : (a.name < b.name) ? -1 : 1;
+		}
+		
+		if (elSort == "za") {
+			return a === b ? 0 : (b.name < a.name) ? -1 : 1;
+		}
+	})
+	
+	render(filteredArray , elList)
+})
