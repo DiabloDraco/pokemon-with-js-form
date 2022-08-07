@@ -3478,7 +3478,7 @@ let pokemons = [
 
 let elList = document.querySelector("#list");
 let elForm = document.querySelector("#form")
-
+let elResult = document.querySelector(".result")
 
 let typeArr = []
 function findType(array) {
@@ -3512,6 +3512,7 @@ elList.addEventListener("click" , function (params) {
 })
 function render(array , wrapper) {	
 	wrapper.innerHTML = null
+	elResult.textContent = array.length
 	let fragment = document.createDocumentFragment()
 	for (let i = 0; i < array.length; i++) {
 		let newLi = document.createElement("li")
