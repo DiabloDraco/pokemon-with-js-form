@@ -100,6 +100,7 @@ img {
 #form {
     display: flex;
     gap: 8px;
+    width: 50%;
 }
 @media only screen and (max-width: 950px) {
     .logo {
@@ -122,6 +123,9 @@ img {
         background-size: 800px;
         background-repeat: no-repeat;
     }
+    #form {
+        width: 75%;
+    }
 }
 /* copyrighted by Mirmuhsin */
 @media only screen and (max-width: 650px) {
@@ -132,7 +136,9 @@ img {
     .logo {
         width: 250px;
     }
-
+    #form {
+        width: 80%;
+    }
     li {
         background-color: #fff;
         border-radius: 20px;
