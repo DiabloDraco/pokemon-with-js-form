@@ -3479,6 +3479,8 @@ let pokemons = [
 let elList = document.querySelector("#list");
 let elForm = document.querySelector("#form")
 let elResult = document.querySelector(".result")
+let elLiked = document.querySelector("#showLiked")
+let elLikedWrapper = document.querySelector("#list2")
 
 let typeArr = []
 function findType(array) {
@@ -3507,9 +3509,7 @@ function renderType(array , wrapper) {
 renderType(typeArr , elSelect)
 
 
-elList.addEventListener("click" , function (params) {
-	alert("NICEEE CHOOOICEEE BROO!!!!!!")
-})
+
 function render(array , wrapper) {	
 	wrapper.innerHTML = null
 	elResult.textContent = array.length
@@ -3521,7 +3521,7 @@ function render(array , wrapper) {
 		let newP = document.createElement("P")
 		let newP2 = document.createElement("P")
 		let newP3 = document.createElement("P")
-		let newP4 = document.createElement("P")
+		let newBtn = document.createElement("button")
 		let src = array[i]["img"]
 		let srch = array[i]["name"]
 		let srcp1 = array[i]["type"].join(" , ")
@@ -3545,15 +3545,34 @@ function render(array , wrapper) {
 		newLi.appendChild(newP3)
 		newP3.classList.add("text1")
 		newP3.textContent = srcp2
-		newLi.appendChild(newP4)
-		newP4.classList.add("text2")
-		newP4.textContent = "Great choiсe !!!"
+		newBtn.textContent = "Like"
+		newBtn.classList.add("rounded" , "btn-like")
+		newBtn.dataset.likeID = array[i].num
+		newBtn.dataset.id = array[i].id
+		newLi.appendChild(newBtn)
 	}
 	wrapper.appendChild(fragment)
 }
 render(pokemons , elList)
 // copyrighted by Mirmuhsin
-
+let liked = []
+elList.addEventListener("click" , function (evt) {
+	let currentLike = evt.target.dataset.likeID 
+	for (let i = 0; i < pokemons.length; i++) {
+		if (currentLike) {
+			if (pokemons[i]["num"] == currentLike) {
+				if (!liked.includes(pokemons[i])) {
+					liked.push(pokemons[i])
+					console.log(liked);
+				}else{
+					let index = liked.indexOf(pokemons[i])
+					console.log(index);
+					liked.splice(index , 1)
+				}
+			}
+		}
+	}
+})
 elForm.addEventListener("submit" , (evt)=> {
 	evt.preventDefault()
 	
@@ -3565,7 +3584,7 @@ elForm.addEventListener("submit" , (evt)=> {
 	
 	let filteredArray = pokemons.filter(function(item) {
 		let isAll = Selected == "all" ? true : item.type.includes(Selected)
-		let validation = isAll && Number(item.weight.split(" ")[0]) >= elWeight && item.height >= elHeight && item.name.search(elName) !=  -1
+		let validation = isAll && Number(item.weight.split(" ")[0]) >= elWeight && Number(item.height.split(" ")[0]) >= elHeight && item.name.search(elName) !=  -1
 		return validation
 	})
 
@@ -3585,11 +3604,15 @@ elForm.addEventListener("submit" , (evt)=> {
 		if (elSort == "az") {
 			return a === b ? 0 : (a.name < b.name) ? -1 : 1;
 		}
-		
 		if (elSort == "za") {
 			return a === b ? 0 : (b.name < a.name) ? -1 : 1;
 		}
 	})
 	
 	render(filteredArray , elList)
+})
+
+elLiked.addEventListener("click" , function (evt) {
+	render(liked , elLikedWrapper)
+	elList.innerHTML = null
 })

@@ -10,6 +10,7 @@
 	<title>Pokemon</title>
 </head>
 <body class="bg-warning">
+	
 	<img class="logo container align-items-center d-flex" src="./images/pokemon_logo.png">
 	<form id="form" class="mt-5 d-flex  flex-column  flex-lg-row justify-content-center text-center mx-auto">
 		<input type="text" class="form-control name" aria-label="Sizing example input" placeholder="name" aria-describedby="inputGroup-sizing-sm">
@@ -29,9 +30,12 @@
 		</select>
 		<button type="submit" class="btn btn-danger">Search</button>
 	</form>
+	<button id="showLiked" class="container d-flex justify-content-center align-items-center text-center w-auto mt-5 btn btn-danger">Show liked cards</button>
 	<p class="container text-success fs-3 text-center mt-5">Result: <span class="result"></span></p>
 	<div class="container d-flex flex-column justify-content-center align-items-center">
 		<ul id="list" class="row list-unstyled d-flex justify-content-center w-100 col-12 mt-3">
+		</ul>
+		<ul id="list2" class="row list-unstyled d-flex justify-content-center w-100 col-12 mt-3">
 		</ul>
 	</div>
 	<script src="./js/main.js"></script>
