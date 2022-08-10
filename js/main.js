@@ -3546,9 +3546,8 @@ function render(array , wrapper) {
 		newP3.classList.add("text1")
 		newP3.textContent = srcp2
 		newBtn.textContent = "Like"
-		newBtn.classList.add("rounded" , "btn-like")
+		newBtn.classList.add("rounded" , "btn-like" , `tipa${i}`)
 		newBtn.dataset.likeID = array[i].num
-		newBtn.dataset.id = array[i].id
 		newLi.appendChild(newBtn)
 	}
 	wrapper.appendChild(fragment)
@@ -3558,14 +3557,21 @@ render(pokemons , elList)
 let liked = []
 elList.addEventListener("click" , function (evt) {
 	let currentLike = evt.target.dataset.likeID 
+	console.log(currentLike);
 	for (let i = 0; i < pokemons.length; i++) {
 		if (currentLike) {
 			if (pokemons[i]["num"] == currentLike) {
 				if (!liked.includes(pokemons[i])) {
 					liked.push(pokemons[i])
+					let current = document.querySelector(`.btn-like[data-like-i-d="${currentLike}"]`)
+					current.textContent = "Liked"
+					current.style.backgroundColor = "aqua"
 				}else{
 					let index = liked.indexOf(pokemons[i])
 					liked.splice(index , 1)
+					let current = document.querySelector(`.btn-like[data-like-i-d="${currentLike}"]`)
+					current.textContent = "Like"
+					current.style.backgroundColor = "transparent"
 				}
 			}
 		}
@@ -3581,6 +3587,11 @@ elLikedWrapper.addEventListener("click" , function (evt) {
 					let index = liked.indexOf(pokemons[i])
 					liked.splice(index , 1)
 					render(liked , elLikedWrapper)
+					for (let i = 0; i < liked.length; i++) {
+						let likeds = document.querySelector(`.tipa${i}`)
+						likeds.style.backgroundColor = "aqua"
+						likeds.textContent = "Liked"
+					}
 				}
 			}
 		}
@@ -3600,7 +3611,7 @@ elForm.addEventListener("submit" , (evt)=> {
 		let validation = isAll && Number(item.weight.split(" ")[0]) >= elWeight && Number(item.height.split(" ")[0]) >= elHeight && item.name.search(elName) !=  -1
 		return validation
 	})
-
+	
 	filteredArray.sort((a , b)=> {
 		if (elSort == "weighthl") {
 			return b.weight.split(" ")[0] - a.weight.split(" ")[0]
@@ -3628,4 +3639,9 @@ elForm.addEventListener("submit" , (evt)=> {
 elLiked.addEventListener("click" , function (evt) {
 	render(liked , elLikedWrapper)
 	elList.innerHTML = null
+	for (let i = 0; i < liked.length; i++) {
+		let likeds = document.querySelector(`.tipa${i}`)
+		likeds.style.backgroundColor = "aqua"
+		likeds.textContent = "Liked"
+	}
 })
