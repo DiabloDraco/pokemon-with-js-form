@@ -3563,11 +3563,10 @@ elList.addEventListener("click" , function (evt) {
 			if (pokemons[i]["num"] == currentLike) {
 				if (!liked.includes(pokemons[i])) {
 					liked.push(pokemons[i])
-					console.log(liked);
 				}else{
 					let index = liked.indexOf(pokemons[i])
-					console.log(index);
 					liked.splice(index , 1)
+					render(liked , elLikedWrapper)
 				}
 			}
 		}
