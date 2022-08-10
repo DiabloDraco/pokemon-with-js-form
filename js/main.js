@@ -3566,6 +3566,20 @@ elList.addEventListener("click" , function (evt) {
 				}else{
 					let index = liked.indexOf(pokemons[i])
 					liked.splice(index , 1)
+				}
+			}
+		}
+	}
+})
+
+elLikedWrapper.addEventListener("click" , function (evt) {
+	let currentLike = evt.target.dataset.likeID 
+	for (let i = 0; i < pokemons.length; i++) {
+		if (currentLike) {
+			if (pokemons[i]["num"] == currentLike) {
+				if (liked.includes(pokemons[i])) {
+					let index = liked.indexOf(pokemons[i])
+					liked.splice(index , 1)
 					render(liked , elLikedWrapper)
 				}
 			}
