@@ -3481,7 +3481,7 @@ let elForm = document.querySelector("#form")
 let elResult = document.querySelector(".result")
 let elLiked = document.querySelector("#showLiked")
 let elLikedWrapper = document.querySelector("#list2")
-
+let localLiked = JSON.parse(localStorage.getItem("liked"))
 let typeArr = []
 function findType(array) {
 	for (const item of array) {
@@ -3493,9 +3493,13 @@ function findType(array) {
 	}
 }
 findType(pokemons)
-
+let liked 
+if (localLiked) {
+	liked = localLiked
+}else {
+	liked= []
+}
 let elSelect = document.querySelector(".type")
-
 function renderType(array , wrapper) {
 	let fragment = document.createDocumentFragment()
 	for (let i = 0; i < array.length; i++) {
@@ -3504,7 +3508,7 @@ function renderType(array , wrapper) {
 		newOption.textContent = typeArr[i]
 		fragment.appendChild(newOption)
 	}
-	elSelect.appendChild(fragment)
+	wrapper.appendChild(fragment)
 }
 renderType(typeArr , elSelect)
 
@@ -3554,10 +3558,9 @@ function render(array , wrapper) {
 }
 render(pokemons , elList)
 // copyrighted by Mirmuhsin
-let liked = []
+
 elList.addEventListener("click" , function (evt) {
 	let currentLike = evt.target.dataset.likeID 
-	console.log(currentLike);
 	for (let i = 0; i < pokemons.length; i++) {
 		if (currentLike) {
 			if (pokemons[i]["num"] == currentLike) {
@@ -3566,9 +3569,11 @@ elList.addEventListener("click" , function (evt) {
 					let current = document.querySelector(`.btn-like[data-like-i-d="${currentLike}"]`)
 					current.textContent = "Liked"
 					current.style.backgroundColor = "aqua"
+					localStorage.setItem("liked" , JSON.stringify(liked))
 				}else{
 					let index = liked.indexOf(pokemons[i])
 					liked.splice(index , 1)
+					localStorage.setItem("liked" , JSON.stringify(liked))
 					let current = document.querySelector(`.btn-like[data-like-i-d="${currentLike}"]`)
 					current.textContent = "Like"
 					current.style.backgroundColor = "transparent"
@@ -3582,16 +3587,17 @@ elLikedWrapper.addEventListener("click" , function (evt) {
 	let currentLike = evt.target.dataset.likeID 
 	for (let i = 0; i < pokemons.length; i++) {
 		if (currentLike) {
-			if (pokemons[i]["num"] == currentLike) {
-				if (liked.includes(pokemons[i])) {
-					let index = liked.indexOf(pokemons[i])
-					liked.splice(index , 1)
-					render(liked , elLikedWrapper)
-					for (let i = 0; i < liked.length; i++) {
-						let likeds = document.querySelector(`.tipa${i}`)
-						likeds.style.backgroundColor = "aqua"
-						likeds.textContent = "Liked"
-					}
+			if (liked[i]["num"] == currentLike) {
+				let index = liked.indexOf(liked[i])
+				liked.splice(index , 1)
+				console.log(index);
+				console.log(liked);
+				localStorage.setItem("liked" , JSON.stringify(liked))
+				render(liked , elLikedWrapper)
+				for (let i = 0; i < liked.length; i++) {
+					let likeds = document.querySelector(`.tipa${i}`)
+					likeds.style.backgroundColor = "aqua"
+					likeds.textContent = "Liked"
 				}
 			}
 		}
